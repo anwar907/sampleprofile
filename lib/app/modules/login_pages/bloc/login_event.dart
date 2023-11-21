@@ -9,4 +9,3 @@ class LoginEvent extends Equatable {
   @override
   List<Object?> get props => [username, password];
 }
-

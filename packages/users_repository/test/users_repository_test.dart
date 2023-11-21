@@ -45,4 +45,29 @@ void main() {
           isA<UsersModel>());
     });
   });
+
+  group('Unit Test Profile Repository', () {
+    test('should return exception', () async {
+      when(() => apiClient.userProfile(id: any(named: 'id')))
+          .thenThrow(Exception('Error'));
+      expect(() => usersRepository.profile(id: 0),
+          throwsA(isA<ProfileRepositoryException>()));
+    });
+
+    test('should return data from api repository', () async {
+      when(() => apiClient.userProfile(id: any(named: 'id')))
+          .thenAnswer((_) async => UsersModel(
+                email: 'email',
+                firstName: 'firstName',
+                gender: 'gender',
+                id: 1,
+                image: 'image',
+                lastName: 'lastName',
+                token: 'token',
+                username: 'username',
+              ));
+
+      expect(await usersRepository.profile(id: 0), isA<UsersModel>());
+    });
+  });
 }

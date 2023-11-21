@@ -43,23 +43,13 @@ class LoginView extends StatelessWidget {
             BlocListener<LoginBloc, LoginState>(
                 listener: (context, state) {
                   if (state.status == GlobalSatus.success) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const AlertDialog(
-                              title: Center(
-                                child: Text('Alert'),
-                              ),
-                              content: Text('Login Success'),
-                            ));
-                    Future.delayed(const Duration(seconds: 2), () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => ProfilePage(
-                                    id: state.loginModels?.id,
-                                  )),
-                          ModalRoute.withName("/profile"));
-                    });
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProfilePage(
+                                  id: state.loginModels?.id,
+                                )),
+                        ModalRoute.withName("/profile"));
                   }
 
                   if (state.status == GlobalSatus.failure) {
@@ -82,33 +72,38 @@ class LoginView extends StatelessWidget {
                             ));
                   }
                 },
-                child: OutlinedButton(
-                    onPressed: () {
-                      if (emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty) {
-                        context.read<LoginBloc>().add(LoginEvent(
-                            username: emailController.text,
-                            password: passwordController.text));
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: const Center(
-                                    child: Text('Alert'),
-                                  ),
-                                  actions: [
-                                    OutlinedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Close')),
-                                  ],
-                                  content: const Text(
-                                      'User ID dan atau Password anda belum diisi'),
-                                ));
-                      }
+                child: Hero(
+                    tag: 'hero-custom-tween',
+                    createRectTween: (Rect? begin, Rect? end) {
+                      return MaterialRectCenterArcTween(begin: begin, end: end);
                     },
-                    child: const Text('Login'))),
+                    child: OutlinedButton(
+                        onPressed: () {
+                          if (emailController.text.isNotEmpty &&
+                              passwordController.text.isNotEmpty) {
+                            context.read<LoginBloc>().add(LoginEvent(
+                                username: emailController.text,
+                                password: passwordController.text));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: const Center(
+                                        child: Text('Alert'),
+                                      ),
+                                      actions: [
+                                        OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Close')),
+                                      ],
+                                      content: const Text(
+                                          'User ID dan atau Password anda belum diisi'),
+                                    ));
+                          }
+                        },
+                        child: const Text('Login')))),
           ],
         ),
       ),

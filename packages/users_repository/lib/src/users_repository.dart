@@ -9,6 +9,14 @@ class UsersRespositoryException extends RepositoryException {
   UsersRespositoryException(super.error, super.stackTrace);
 }
 
+/// {@template RepositoryException}
+/// Generic [RepositoryException] thrown by the [UsersRespositoryException].
+/// {@endtemplate}
+class ProfileRepositoryException extends RepositoryException {
+  /// {@macro ProfileRepositoryException}
+  ProfileRepositoryException(super.error, super.stackTrace);
+}
+
 class UsersRespository {
   UsersRespository({required ApiRepository apiRespository})
       : _apiRespository = apiRespository;
@@ -28,7 +36,7 @@ class UsersRespository {
     try {
       return await _apiRespository.userProfile(id: id);
     } on Exception catch (error, stackTrace) {
-      throw UsersRespositoryException(error, stackTrace);
+      throw ProfileRepositoryException(error, stackTrace);
     }
   }
 }

@@ -19,25 +19,28 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider<LoginBloc>(
-              create: (_) => LoginBloc(usersRespository: _usersRepository)),
-          BlocProvider<ProfileBloc>(
-              create: (_) => ProfileBloc(usersRespository: _usersRepository)),
-          BlocProvider(create: (_) => SplashCubit())
-        ],
-        child: MaterialApp(
-          title: 'Profile',
-          theme: getAppTheme(context),
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: AppRouter().generateRoute,
-          initialRoute: '/',
-          routes: {
-            Routes.splash: (context) => const SplashScreen(),
-            Routes.login: (context) => const LoginPage(),
-            Routes.profile: (context) => const ProfilePage()
-          },
-        ));
+    return MultiRepositoryProvider(
+        providers: [RepositoryProvider.value(value: _usersRepository)],
+        child: MultiBlocProvider(
+            providers: [
+              BlocProvider<LoginBloc>(
+                  create: (_) => LoginBloc(usersRespository: _usersRepository)),
+              BlocProvider<ProfileBloc>(
+                  create: (_) =>
+                      ProfileBloc(usersRespository: _usersRepository)),
+              BlocProvider(create: (_) => SplashCubit())
+            ],
+            child: MaterialApp(
+              title: 'Profile',
+              theme: getAppTheme(context),
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: AppRouter().generateRoute,
+              initialRoute: '/',
+              routes: {
+                Routes.splash: (context) => const SplashScreen(),
+                Routes.login: (context) => const LoginPage(),
+                Routes.profile: (context) => const ProfilePage()
+              },
+            )));
   }
 }

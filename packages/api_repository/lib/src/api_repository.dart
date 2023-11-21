@@ -15,7 +15,7 @@ class ApiRepository implements CleintRepository {
 
       return UsersModel.fromJson(response?.data);
     } on Exception catch (error, stackTrace) {
-      return Future.error(error, stackTrace);
+      throw Future.error(error, stackTrace);
     }
   }
 
