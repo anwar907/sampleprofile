@@ -1,3 +1,4 @@
+import 'package:api_repository/models/product_models.dart';
 import 'package:api_repository/models/users_models.dart';
 import 'package:api_repository/utils/api_method.dart';
 import 'package:client_repository/client_repository.dart';
@@ -25,6 +26,17 @@ class ApiRepository implements CleintRepository {
       final response = await apiClient.get('users/$id');
 
       return UsersModel.fromJson(response?.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Category> allProduct() async {
+    try {
+      final response = await apiClient.get('products');
+
+      return Category.fromJson(response?.data);
     } catch (e) {
       throw Exception(e);
     }

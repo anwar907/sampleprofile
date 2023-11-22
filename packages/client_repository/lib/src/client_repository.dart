@@ -5,4 +5,6 @@ abstract class CleintRepository {
       {required String username, required String password});
 
   Future<UsersModel> userProfile({required int id});
+
+  Future<Category> allProduct();
 }

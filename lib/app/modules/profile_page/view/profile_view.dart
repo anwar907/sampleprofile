@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tokosebelah/app/modules/login_pages/view/login_view.dart';
+import 'package:tokosebelah/app/modules/product_page/product_page.dart';
 import 'package:tokosebelah/app/modules/profile_page/bloc/profile_bloc.dart';
 import 'package:tokosebelah/utils/constans.dart';
 
@@ -15,6 +16,15 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          leading: IconButton.filled(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProductPage()),
+                    ModalRoute.withName('/product'));
+              },
+              icon: const Icon(Icons.card_giftcard_rounded)),
           actions: [
             IconButton.filled(
                 onPressed: () {
@@ -24,7 +34,7 @@ class ProfileView extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => LoginView()),
                       ModalRoute.withName('/login'));
                 },
-                icon: const Icon(Icons.exit_to_app_outlined))
+                icon: const Icon(Icons.exit_to_app_outlined)),
           ],
         ),
         body: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {

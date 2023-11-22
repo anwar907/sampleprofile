@@ -39,4 +39,12 @@ class UsersRespository {
       throw ProfileRepositoryException(error, stackTrace);
     }
   }
+
+  Future<Category> fetchProdcut() async {
+    try {
+      return await _apiRespository.allProduct();
+    } on Exception catch (error, stackTrace) {
+      throw UsersRespositoryException(error, stackTrace);
+    }
+  }
 }

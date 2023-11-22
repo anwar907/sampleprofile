@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tokosebelah/app/modules/login_pages/bloc/login_bloc.dart';
+import 'package:tokosebelah/app/modules/product_page/bloc/product_bloc.dart';
+import 'package:tokosebelah/app/modules/product_page/product_page.dart';
 import 'package:tokosebelah/app/modules/splash_page/cubit/splash_cubit.dart';
 import 'package:tokosebelah/config/routes.dart';
 import 'package:tokosebelah/themes/index.dart';
@@ -23,6 +25,9 @@ class App extends StatelessWidget {
         providers: [RepositoryProvider.value(value: _usersRepository)],
         child: MultiBlocProvider(
             providers: [
+              BlocProvider(
+                  create: (_) =>
+                      ProductBloc(usersRespository: _usersRepository)),
               BlocProvider<LoginBloc>(
                   create: (_) => LoginBloc(usersRespository: _usersRepository)),
               BlocProvider<ProfileBloc>(
@@ -39,7 +44,8 @@ class App extends StatelessWidget {
               routes: {
                 Routes.splash: (context) => const SplashScreen(),
                 Routes.login: (context) => const LoginPage(),
-                Routes.profile: (context) => const ProfilePage()
+                Routes.profile: (context) => const ProfilePage(),
+                Routes.product: (context) => const ProductPage()
               },
             )));
   }
