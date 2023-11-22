@@ -70,4 +70,24 @@ void main() {
       expect(await usersRepository.profile(id: 0), isA<UsersModel>());
     });
   });
+
+  group('Unit Test Product Repository', () {
+    test('should return exception', () async {
+      when(() => apiClient.allProduct()).thenThrow(Exception('Error'));
+
+      expect(() => usersRepository.fetchProdcut(),
+          throwsA(isA<ProductRepositoryException>()));
+    });
+
+    test('shworld return data from api', () async {
+      when(() => apiClient.allProduct()).thenAnswer((_) async => Category(
+            products: [],
+            total: 0,
+            skip: 0,
+            limit: 0,
+          ));
+
+      expect(await usersRepository.fetchProdcut(), isA<Category>());
+    });
+  });
 }
